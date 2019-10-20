@@ -1,0 +1,30 @@
+#!/bin/bash
+
+FOLDER=$1
+TITLE=$2
+HELP='--help'
+H='-h'
+
+    if [ $FOLDER == $HELP ] || [ $FOLDER == $H ]
+    then
+        echo 'reload [FOLDER] [TITLE]'
+        echo 'Title = You will find the title in the browser tap text'
+        echo 'Folder = Root Folder of the project'
+        echo
+        echo "Please be advice that you will need both xdotool And inotifywait"
+        echo
+        echo "Paula George"
+
+    else
+        echo 'Started'
+        WID=$(xdotool  search --name $TITLE)
+
+        echo
+        while [ 1 -eq 1 ]; do
+        sleep 5
+        inotifywait -r -qq $FOLDER -e modify >/dev/null
+        xdotool windowactivate $WID
+        xdotool key 'F5'
+        done
+
+    fi
